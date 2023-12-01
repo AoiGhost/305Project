@@ -1,0 +1,5 @@
+book 1 :
+https://libgen.is/book/index.php?md5=F71F398BA9A89E2E8D5A63D921DBFD00
+
+book 2 :
+https://libgen.is/book/index.php?md5=0983A5F91804FE8FB29CC95F44E3F299&open=3
