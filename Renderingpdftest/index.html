@@ -1,1 +1,56 @@
-<!DOCTYPE html> <html> <head> <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script> </head> <body> <div id="pdfContainer"></div> <script> const pdfUrl = '1.pdf'; PDFJS.getDocument(pdfUrl).then(function(pdf) { const pdfContainer = document.getElementById('pdfContainer'); for(let i = 1; i <= pdf.numPages; i++) { const pageDiv = document.createElement('div'); pageDiv.className = 'page'; pdfContainer.appendChild(pageDiv); pdf.getPage(i).then(function(page) { const canvas = document.createElement('canvas'); pageDiv.appendChild(canvas); const viewport = page.getViewport({scale: 1}); canvas.width = viewport.width; canvas.height = viewport.height; page.render({ canvasContext: canvas.getContext('2d'), viewport: viewport }); }); }); }); </script> </body> </html>
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+
+  <div id="container"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
+
+  <script>
+
+  // 1. Get reference to container element
+  const container = document.getElementById('container');
+
+  // 2. Specify PDF url
+  const pdfUrl = '1.pdf';
+
+  // 3. Load PDF document
+  PDFJS.getDocument(pdfUrl).then(pdf => {
+
+    // 4. Loop through pages
+    for(let i = 1; i <= pdf.numPages; i++) {
+
+      // 5. Get page 
+      pdf.getPage(i).then(page => {
+
+        // 6. Create canvas for rendering
+        const canvas = document.createElement('canvas');
+
+        // 7. Get viewport dimensions
+        const viewport = page.getViewport({scale: 1});
+
+        // 8. Set canvas width/height
+        canvas.width = viewport.width;
+        canvas.height = viewport.height;
+
+        // 9. Render page on canvas 
+        page.render({
+          canvasContext: canvas.getContext('2d'),
+          viewport: viewport
+        });
+
+        // 10. Add canvas to container
+        container.appendChild(canvas);
+
+      });
+
+    }
+
+  });
+
+  </script>
+
+</body>
+</html>
