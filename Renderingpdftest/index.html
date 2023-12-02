@@ -8,36 +8,68 @@
 </head>
 <body>
   <canvas id="pdfCanvas"></canvas>
+  <button id="prevPage">Previous Page</button>
+  <span>Page <span id="pageNumber">1</span> of <span id="pageCount">1</span></span>
+  <button id="nextPage">Next Page</button>
+  <br>
+  <label for="pageInput">Go to Page:</label>
+  <input type="number" id="pageInput" min="1" value="1">
+  <button id="goToPage">Go</button>
 
   <script>
-    // Fetch the PDF document
     const pdfUrl = 'https://305project-git-main-aoighosts-projects.vercel.app/Renderingpdftest/1.pdf';
-
-    // Set up the canvas and rendering context
     const canvas = document.getElementById('pdfCanvas');
     const context = canvas.getContext('2d');
+    let currentPage = 1;
 
-    // Load the PDF document
-    pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
-      // Set the total number of pages
-      const numPages = pdfDoc.numPages;
+    const updatePageNumber = (num) => {
+      document.getElementById('pageNumber').textContent = num;
+    };
 
-      // Initial page number
-      let pageNum = 1;
+    const renderPage = (pageNum) => {
+      pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
+        const pageCount = pdfDoc.numPages;
+        document.getElementById('pageCount').textContent = pageCount;
 
-      // Render the first page
-      pdfDoc.getPage(pageNum).then(page => {
-        const viewport = page.getViewport({ scale: 1.5 });
-        canvas.width = viewport.width;
-        canvas.height = viewport.height;
+        pdfDoc.getPage(pageNum).then(page => {
+          const viewport = page.getViewport({ scale: 1.5 });
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
 
-        const renderContext = {
-          canvasContext: context,
-          viewport: viewport
-        };
+          const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+          };
 
-        page.render(renderContext);
+          page.render(renderContext);
+        });
+
+        updatePageNumber(pageNum);
+        currentPage = pageNum;
       });
+    };
+
+    renderPage(currentPage);
+
+    document.getElementById('prevPage').addEventListener('click', () => {
+      if (currentPage > 1) {
+        renderPage(currentPage - 1);
+      }
+    });
+
+    document.getElementById('nextPage').addEventListener('click', () => {
+      if (currentPage < pageCount) {
+        renderPage(currentPage + 1);
+      }
+    });
+
+    document.getElementById('goToPage').addEventListener('click', () => {
+      const inputPage = parseInt(document.getElementById('pageInput').value);
+      if (inputPage >= 1 && inputPage <= pageCount) {
+        renderPage(inputPage);
+      } else {
+        alert('Invalid page number. Please enter a valid page number.');
+      }
     });
   </script>
 </body>
