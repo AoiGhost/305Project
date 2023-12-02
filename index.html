@@ -63,10 +63,8 @@
   </div>
 
   <script>
-    const expirationDate = new Date('2023-11-1T12:18:00');
+    const expirationDate = new Date('2023-11-01T12:18:00Z');
     const currentDate = new Date();
-	console.log('Current Date:', currentDate);
-    console.log('Expiration Date:', expirationDate);
 
     if (currentDate > expirationDate) {
       document.getElementById('pdfContainer').style.display = 'none';
