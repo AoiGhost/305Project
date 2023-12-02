@@ -4,17 +4,36 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PDF Viewer</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #pdfCanvas {
+      margin-bottom: 20px;
+    }
+
+    button, input {
+      margin-right: 10px;
+    }
+  </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
 </head>
 <body>
-  <canvas id="pdfCanvas"></canvas>
-  <button id="prevPage">Previous Page</button>
-  <span>Page <span id="pageNumber">1</span> of <span id="pageCount">1</span></span>
-  <button id="nextPage">Next Page</button>
-  <br>
-  <label for="pageInput">Go to Page:</label>
-  <input type="number" id="pageInput" min="1" value="1">
-  <button id="goToPage">Go</button>
+  <div>
+    <canvas id="pdfCanvas"></canvas>
+    <button id="prevPage">Previous Page</button>
+    <span>Page <span id="pageNumber">1</span> of <span id="pageCount">1</span></span>
+    <button id="nextPage">Next Page</button>
+    <br>
+    <label for="pageInput">Go to Page:</label>
+    <input type="number" id="pageInput" min="1" value="1">
+    <button id="goToPage">Go</button>
+  </div>
 
   <script>
     const pdfUrl = '1.pdf';
