@@ -17,10 +17,11 @@
   <button id="goToPage">Go</button>
 
   <script>
-    const pdfUrl = 'https://305project-git-main-aoighosts-projects.vercel.app/Renderingpdftest/1.pdf';
+    const pdfUrl = '1.pdf';
     const canvas = document.getElementById('pdfCanvas');
     const context = canvas.getContext('2d');
     let currentPage = 1;
+    let pageCount = 1;
 
     const updatePageNumber = (num) => {
       document.getElementById('pageNumber').textContent = num;
@@ -28,7 +29,8 @@
 
     const renderPage = (pageNum) => {
       pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
-        const pageCount = pdfDoc.numPages;
+        pageCount = pdfDoc.numPages; // Move pageCount assignment inside the renderPage function
+
         document.getElementById('pageCount').textContent = pageCount;
 
         pdfDoc.getPage(pageNum).then(page => {
