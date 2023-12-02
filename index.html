@@ -34,6 +34,13 @@
       font-style: italic;
       color: #555;
     }
+
+    #expirationMessage {
+      display: none;
+      margin-top: 10px;
+      font-style: italic;
+      color: #ff0000;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
 </head>
@@ -52,68 +59,79 @@
       <button id="goToPage">Go</button>
     </div>
     <div id="loadingMessage">Loading...</div>
+    <div id="expirationMessage">This content has expired.</div>
   </div>
 
   <script>
-    const pdfUrl = 'https://305project-git-main-aoighosts-projects.vercel.app/OnlineLibrary/Books/1.pdf';
-    const pdfContainer = document.getElementById('pdfContainer');
-    const canvas = document.getElementById('pdfCanvas');
-    const context = canvas.getContext('2d');
-    const loadingMessage = document.getElementById('loadingMessage');
-    let currentPage = 1;
-    let pageCount = 1;
+    const expirationDate = new Date('2024-01-01T12:14:00');
+    const currentDate = new Date();
 
-    const updatePageNumber = (num) => {
-      document.getElementById('pageNumber').textContent = num;
-    };
+    if (currentDate > expirationDate) {
+      document.getElementById('pdfContainer').style.display = 'none';
+      document.getElementById('expirationMessage').style.display = 'block';
+    } else {
+      document.getElementById('pdfContainer').style.display = 'block';
 
-    const renderPage = (pageNum) => {
-      loadingMessage.style.display = 'block';
-      pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
-        loadingMessage.style.display = 'none';
-        pageCount = pdfDoc.numPages;
-        document.getElementById('pageCount').textContent = pageCount;
+      const pdfUrl = 'https://305project-git-main-aoighosts-projects.vercel.app/OnlineLibrary/Books/1.pdf';
+      const pdfContainer = document.getElementById('pdfContainer');
+      const canvas = document.getElementById('pdfCanvas');
+      const context = canvas.getContext('2d');
+      const loadingMessage = document.getElementById('loadingMessage');
+      let currentPage = 1;
+      let pageCount = 1;
 
-        pdfDoc.getPage(pageNum).then(page => {
-          const viewport = page.getViewport({ scale: 1.5 });
-          canvas.width = viewport.width;
-          canvas.height = viewport.height;
+      const updatePageNumber = (num) => {
+        document.getElementById('pageNumber').textContent = num;
+      };
 
-          const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-          };
+      const renderPage = (pageNum) => {
+        loadingMessage.style.display = 'block';
+        pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
+          loadingMessage.style.display = 'none';
+          pageCount = pdfDoc.numPages;
+          document.getElementById('pageCount').textContent = pageCount;
 
-          page.render(renderContext);
+          pdfDoc.getPage(pageNum).then(page => {
+            const viewport = page.getViewport({ scale: 1.5 });
+            canvas.width = viewport.width;
+            canvas.height = viewport.height;
+
+            const renderContext = {
+              canvasContext: context,
+              viewport: viewport
+            };
+
+            page.render(renderContext);
+          });
+
+          updatePageNumber(pageNum);
+          currentPage = pageNum;
         });
+      };
 
-        updatePageNumber(pageNum);
-        currentPage = pageNum;
+      renderPage(currentPage);
+
+      document.getElementById('prevPage').addEventListener('click', () => {
+        if (currentPage > 1) {
+          renderPage(currentPage - 1);
+        }
       });
-    };
 
-    renderPage(currentPage);
+      document.getElementById('nextPage').addEventListener('click', () => {
+        if (currentPage < pageCount) {
+          renderPage(currentPage + 1);
+        }
+      });
 
-    document.getElementById('prevPage').addEventListener('click', () => {
-      if (currentPage > 1) {
-        renderPage(currentPage - 1);
-      }
-    });
-
-    document.getElementById('nextPage').addEventListener('click', () => {
-      if (currentPage < pageCount) {
-        renderPage(currentPage + 1);
-      }
-    });
-
-    document.getElementById('goToPage').addEventListener('click', () => {
-      const inputPage = parseInt(document.getElementById('pageInput').value);
-      if (inputPage >= 1 && inputPage <= pageCount) {
-        renderPage(inputPage);
-      } else {
-        alert('Invalid page number. Please enter a valid page number.');
-      }
-    });
+      document.getElementById('goToPage').addEventListener('click', () => {
+        const inputPage = parseInt(document.getElementById('pageInput').value);
+        if (inputPage >= 1 && inputPage <= pageCount) {
+          renderPage(inputPage);
+        } else {
+          alert('Invalid page number. Please enter a valid page number.');
+        }
+      });
+    }
   </script>
 </body>
 </html>
