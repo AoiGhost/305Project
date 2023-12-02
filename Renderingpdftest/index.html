@@ -1,58 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PDF Viewer</title>
+  <script src="https://mozilla.github.io/pdf.js/build/pdf.js"></script>
 </head>
 <body>
+  <canvas id="pdfCanvas"></canvas>
 
-  <div id="container"></div>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.6.347/pdf.min.js"></script>
-  
-	
   <script>
-  console.log(PDFJS);
+    // Fetch the PDF document
+    const pdfUrl = 'https://305project-git-main-aoighosts-projects.vercel.app/Renderingpdftest/1.pdf';
 
-  // 1. Get reference to container element
-  const container = document.getElementById('container');
+    // Set up the canvas and rendering context
+    const canvas = document.getElementById('pdfCanvas');
+    const context = canvas.getContext('2d');
 
-  // 2. Specify PDF url
-  const pdfUrl = "https://305project-git-main-aoighosts-projects.vercel.app/Renderingpdftest/1.pdf;
+    // Load the PDF document
+    pdfjsLib.getDocument(pdfUrl).promise.then(pdfDoc => {
+      // Set the total number of pages
+      const numPages = pdfDoc.numPages;
 
-  // 3. Load PDF document
-  PDFJS.getDocument(pdfUrl).then(pdf => {
+      // Initial page number
+      let pageNum = 1;
 
-    // 4. Loop through pages
-    for(let i = 1; i <= pdf.numPages; i++) {
-
-      // 5. Get page 
-      pdf.getPage(i).then(page => {
-
-        // 6. Create canvas for rendering
-        const canvas = document.createElement('canvas');
-
-        // 7. Get viewport dimensions
-        const viewport = page.getViewport({scale: 1});
-
-        // 8. Set canvas width/height
+      // Render the first page
+      pdfDoc.getPage(pageNum).then(page => {
+        const viewport = page.getViewport({ scale: 1.5 });
         canvas.width = viewport.width;
         canvas.height = viewport.height;
 
-        // 9. Render page on canvas 
-        page.render({
-          canvasContext: canvas.getContext('2d'),
+        const renderContext = {
+          canvasContext: context,
           viewport: viewport
-        });
+        };
 
-        // 10. Add canvas to container
-        container.appendChild(canvas);
-
+        page.render(renderContext);
       });
-
-    }
-
-  });
-
+    });
   </script>
-
 </body>
 </html>
