@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.Socket;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -53,11 +54,17 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-        ProcessBuilder Script = new ProcessBuilder("cmd.exe","/c","C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
-        
+        ProcessBuilder myProcessBuilder = new ProcessBuilder("cmd.exe", "/c", "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
+        Map<String, String> environment = myProcessBuilder.environment();
+        String path = environment.get("PATH");
+        String gitPath = "C:\\Program Files\\Git\\bin";
+        String updatedPath = gitPath + ";" + path;
+        environment.put("PATH", updatedPath);
+        myProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
+        myProcessBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
-            Script.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
-            Process process = Script.start();
+            myProcessBuilder.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
+            Process process = myProcessBuilder.start();
              // Capture the output and error streams
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
             String line;
@@ -91,8 +98,9 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-         ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Pull.bat");
+         ProcessBuilder Script = new ProcessBuilder("cmd.exe", "/c", "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
          try {
+            Script.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
             Process process = Script.start();
             int exitcode = process.waitFor();
             boolean result;
