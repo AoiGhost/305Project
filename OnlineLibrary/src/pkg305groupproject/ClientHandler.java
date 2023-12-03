@@ -50,7 +50,7 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-        ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
+        ProcessBuilder Script = new ProcessBuilder("cmd.exe","/c","C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
         
         try {
             Process process = Script.start();
