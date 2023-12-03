@@ -38,10 +38,12 @@ public class ClientHandler implements Runnable{
         
     }
     
+    
+    
+    
     public static synchronized boolean Commit(){
         /* this method will do the following
-        pull the repo from github to ensure we have latest version
-        then commit any changes we have done in the local git repo
+        commit chagnes to the local repo then push to git repo
         */
         
 
@@ -56,9 +58,11 @@ public class ClientHandler implements Runnable{
             boolean result;
             result = (exitcode == 0);
             return result;
+            //if true is returned the the process executed successfully
         } catch (IOException | InterruptedException ex) {
             System.out.println(ex.toString());
-            //if we reach here this means that an exception have occured and so return false
+            //if we reach here this means that an exception have occured 
+            //so we print the execption and return false to indicate that the operation failed.
             return false;
         }
         
@@ -67,4 +71,29 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script gg
 
     }
+    public static synchronized boolean Pull(){
+        /* this method will do the following
+        pull the repo from github to ensure we have latest version
+        */
+        
+
+        //here I will make a process that executes the script 
+        
+        //here put the path to the script
+         ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Pull");
+         try {
+            Process process = Script.start();
+            int exitcode = process.waitFor();
+            boolean result;
+            result = (exitcode == 0);
+            return result;
+            //if true is returned the the process executed successfully
+        } catch (IOException | InterruptedException ex) {
+            System.out.println(ex.toString());
+            //if we reach here this means that an exception have occured 
+            //so we print the execption and return false to indicate that the operation failed.
+            return false;
+        }
+        
+}
 }
