@@ -44,6 +44,7 @@ public class ClientHandler implements Runnable{
         then commit any changes we have done in the local git repo
         */
         
+
         //here I will make a process that executes the script 
         
         //here put the path to the script
@@ -62,5 +63,8 @@ public class ClientHandler implements Runnable{
         }
         
         
+
+        //here I will make a process that executes the script gg
+
     }
 }
