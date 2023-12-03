@@ -14,8 +14,8 @@ public class Main {
     public static void main(String[] args) {
         Book books = new Book();
         
-        
-        
+        ClientHandler.Commit();
+        /*
         try {
             System.out.println("Enter ID: ");
             Scanner user_input = new Scanner(System.in);
@@ -77,9 +77,10 @@ public class Main {
 
             System.out.println("you entered in the wrong format");
         }
-
+        */
     }
-
+        
+    
     private static boolean Authentication(int ID, String password) {
         return true;
     }

@@ -50,7 +50,7 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-        ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push");
+        ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
         
         try {
             Process process = Script.start();
@@ -80,7 +80,7 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-         ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Pull");
+         ProcessBuilder Script = new ProcessBuilder("C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Pull.bat");
          try {
             Process process = Script.start();
             int exitcode = process.waitFor();
