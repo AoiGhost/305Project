@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         Book books = new Book();
         
-        System.out.println(ClientHandler.Commit());
+        System.out.println(ClientHandler.Pull());
         /*
         try {
             System.out.println("Enter ID: ");
