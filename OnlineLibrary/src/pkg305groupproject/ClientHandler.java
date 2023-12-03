@@ -4,7 +4,10 @@
  */
 package pkg305groupproject;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -53,7 +56,15 @@ public class ClientHandler implements Runnable{
         ProcessBuilder Script = new ProcessBuilder("cmd.exe","/c","C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
         
         try {
+            Script.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
             Process process = Script.start();
+             // Capture the output and error streams
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);  // Print the output
+            }
+            
             int exitcode = process.waitFor();
             boolean result;
             result = (exitcode == 0);
