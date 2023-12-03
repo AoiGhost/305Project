@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-       int port = 9324; // Port number
+        int port = 9324; // Port number
         ServerSocket serverSocket = new ServerSocket(port);
         System.out.println("Server started. Listening on port " + port);
 
