@@ -16,54 +16,58 @@ public class Main {
         
         System.out.println(ClientHandler.Pull());
         /*
-        try {
+           try {
             System.out.println("Enter ID: ");
             Scanner user_input = new Scanner(System.in);
             int ID = user_input.nextInt();
             System.out.println("Enter Passowrd:");
             String password = user_input.next();
             if (Authentication(ID, password)) {
-
+                try {
+                    
+                } catch (Exception e) {
+                }
                 System.out.println("What would you like to choose?, Buy an e-book(1), Rent e-book(2)");
                 System.out.println("choose the number that's the next to the thing you want");
-                int number = user_input.nextInt();
+                
+                try {
+                    int number = user_input.nextInt();
                 if (number == 1) {
                     System.out.println("the list of books that are available to buy below: " + "\n");
                     books.viewBooksInfo();
 
                     System.out.println("Enter the book number you want to buy: ");
                     int book_number = user_input.nextInt();
+                   
                     Book book = findBook(books, book_number);
                     String book_name = book.getName();
 
                     String serverAddress = "localhost";
                     int port = 9324;
 
-                    try ( 
-                            Socket socket = new Socket(serverAddress, port);  
+                    try (
+                             Socket socket = new Socket(serverAddress, port);  
                             PrintWriter out = new PrintWriter(socket.getOutputStream(), true);  
-                            BufferedInputStream in = new BufferedInputStream(socket.getInputStream());  
+                            BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
                             // Create a FileOutputStream to save the downloaded book to the spceific path written below
-                            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\starx\\Desktop\\CPIT305\\Downloaded books\\"+book_name+".pdf")) 
-                    
-                    {
+                              FileOutputStream fileOut = new FileOutputStream("C:\\Users\\starx\\Desktop\\CPIT305\\Downloaded books\\" + book_name + ".pdf")) {
 
-                        
                         String bookName = book_name;
-                        
+
                         //Send the book name to the server
                         out.println(bookName);
-                        
+
                         // Create a buffer for reading data
                         byte[] buffer = new byte[2097152];
                         int count;
-                        
-                         // Read data from the server and write it to the file
+
+                        // Read data from the server and write it to the file
                         while ((count = in.read(buffer)) > 0) {
                             fileOut.write(buffer, 0, count);
                             
+
                         }
-                        
+
                         System.out.println("Thanks for buying the book and the book downloaded successfully.");
                     } catch (IOException e) {
                         System.err.println("Error: " + e.getMessage());
@@ -71,12 +75,19 @@ public class Main {
 
                 }
 
+                    
+                } catch (InputMismatchException e) {
+                    System.out.println("you entered in the wrong format");
+                }
+                
             }
 
         } catch (InputMismatchException e) {
 
             System.out.println("you entered in the wrong format");
         }
+
+        
         */
     }
         
