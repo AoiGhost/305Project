@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package pkg305_project;
+package pkg305groupproject;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -14,8 +14,6 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
-import javax.swing.JOptionPane;
-
 /**
  *
  * @author zezox
@@ -183,8 +181,7 @@ public class DatabaseConnection {
             ResultSet rs = pstmt.executeQuery();
             if (rs.next() && rs.getString("password").equals(passwor)) {
                 return true;
-            }
-            else{
+            } else {
                 System.out.println("Wrong username or password!");
             }
         } catch (SQLException e) {
@@ -205,7 +202,5 @@ public class DatabaseConnection {
             System.out.println("Error adding user: " + e.getMessage());
         }
     }
-    
-    
 
 }
