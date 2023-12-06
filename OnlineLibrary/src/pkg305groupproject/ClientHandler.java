@@ -177,7 +177,7 @@ public class ClientHandler implements Runnable{
             return false;
         }
 }
-    public static void RentedBook(int BookNumber, int Months){
+    public static String RentedBook(int BookNumber, int Months){
         File htmlFile = new File("C:\\Users\\96657\\Documents\\GitHub\\305Project\\BestVersionWithdeletion.html");
         String URL = BookURLGetter(BookNumber);
         String Expirydate = ExpiryDateCreater(Months);
@@ -214,9 +214,12 @@ public class ClientHandler implements Runnable{
             String Filename = "UserID" + "BookNumber";
             
             writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages\\" + Filename);
+            
+            
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return URL; //URL that will lead to book
         
     }
 
