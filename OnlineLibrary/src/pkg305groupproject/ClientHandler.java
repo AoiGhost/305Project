@@ -217,7 +217,7 @@ public class ClientHandler implements Runnable{
             
             ChangeGitrepo(doc, htmlFilename);
             
-            HtmlURl = "https://305project-git-main-aoighosts-projects.vercel.app/Webpages/" + htmlFilename;
+            HtmlURl = "https://305project-git-main-aoighosts-projects.vercel.app/Webpages/" + htmlFilename + ".html";
             
             
         } catch (IOException ex) {
