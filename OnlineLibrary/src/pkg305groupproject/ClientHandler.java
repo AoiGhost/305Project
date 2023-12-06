@@ -56,7 +56,7 @@ public class ClientHandler implements Runnable{
         // Specify the absolute path to your books directory here
         String booksDirectory = "C:\\Users\\starx\\Desktop\\CPIT305\\copresseed books\\";
 
-    //    while (true) {
+  
             try (
                  BufferedReader in = new BufferedReader(new InputStreamReader(Client.getInputStream()));
                  OutputStream out = Client.getOutputStream()) {
@@ -84,11 +84,11 @@ public class ClientHandler implements Runnable{
                 }
             } catch (IOException e) {
                 System.err.println("Error: " + e.getMessage());
-                //break;
+                
             }
             
             
-      //  }
+     
         
         
         
