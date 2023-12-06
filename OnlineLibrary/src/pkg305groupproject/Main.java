@@ -18,6 +18,8 @@ public class Main {
         
         
           try {
+              
+              DatabaseConnection db = new DatabaseConnection();
             System.out.println("Enter ID: ");
             Scanner user_input = new Scanner(System.in);
             int ID = user_input.nextInt();
