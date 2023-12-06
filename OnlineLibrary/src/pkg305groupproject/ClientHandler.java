@@ -211,7 +211,7 @@ public class ClientHandler implements Runnable{
             //after we exit from the if statment , that means we have finished manipulation the doc object
             //now we just need to write it into a new html file
             
-            writeHTMLFile(doc, "outputpath, the path you want to output the new html file to");
+            writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages");
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
