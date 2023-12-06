@@ -13,7 +13,7 @@ public class Main {
 
     public static void main(String[] args) {
         Book books = new Book();
-        ClientHandler.ExpiryDateCreater(5);
+        ClientHandler.RentedBook(1, 3);
         
         
         

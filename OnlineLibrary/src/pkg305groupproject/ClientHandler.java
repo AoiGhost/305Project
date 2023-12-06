@@ -210,8 +210,10 @@ public class ClientHandler implements Runnable{
             }
             //after we exit from the if statment , that means we have finished manipulation the doc object
             //now we just need to write it into a new html file
+            //the file name should change depending on values from the database 
+            String Filename = "UserID" + "BookNumber";
             
-            writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages");
+            writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages\\" + Filename);
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
