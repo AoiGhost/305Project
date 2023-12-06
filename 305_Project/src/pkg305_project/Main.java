@@ -1,5 +1,22 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package pkg305_project;
 
-package pkg305groupproject;
+/**
+ *
+ * @author zezox
+ */
+import java.sql.*;
+import java.util.Scanner;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
 
 import java.io.BufferedInputStream;
 import java.io.FileOutputStream;
@@ -14,7 +31,7 @@ public class Main {
     public static void main(String[] args) {
         Book books = new Book();
 //        System.out.println(ClientHandler.RentedBook(1, 3));
-        
+        ClientHandler.Commit();
         
         
           try {
@@ -108,4 +125,3 @@ public class Main {
     }
 
 }
-
