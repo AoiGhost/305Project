@@ -179,8 +179,9 @@ public class ClientHandler implements Runnable{
 }
     public static String RentedBook(int BookNumber, int Months){
         File htmlFile = new File("C:\\Users\\96657\\Documents\\GitHub\\305Project\\BestVersionWithdeletion.html");
-        String URL = BookURLGetter(BookNumber);
+        String BookURL = BookURLGetter(BookNumber);
         String Expirydate = ExpiryDateCreater(Months);
+        String HtmlURl = "";
         try {
             Document doc = Jsoup.parse(htmlFile, "UTF-8");
             Element javascript = doc.selectFirst("script:containsData(pdfUrl)");
@@ -199,7 +200,7 @@ public class ClientHandler implements Runnable{
                 String scriptCode = javascript.html();
                 // Use regular expressions to find and replace the PDF URL value
                 String reg_url = "(const\\s+pdfUrl\\s*=\\s*').*(';)";
-                String modifiedScriptCode_1 = scriptCode.replaceAll(reg_url,"$1" + URL + "$2");
+                String modifiedScriptCode_1 = scriptCode.replaceAll(reg_url,"$1" + BookURL + "$2");
                 //now we replaced the url value
                 String reg_pdf = "(const\\s+expirationDate\\s*=\\s*new\\s+Date\\(').*('\\);)";
                 String modifiedScriptCode_2 = modifiedScriptCode_1.replaceAll(reg_pdf, "$1" + Expirydate + "$2");
@@ -211,16 +212,19 @@ public class ClientHandler implements Runnable{
             //after we exit from the if statment , that means we have finished manipulation the doc object
             //now we just need to write it into a new html file
             //the file name should change depending on values from the database 
-            String Filename = "UserID" + "BookNumber";
+            String htmlFilename = "UserID" + "BookNumber";
             
-            writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages\\" + Filename);
+            
+            ChangeGitrepo(doc, htmlFilename);
+            
+            HtmlURl = "https://305project-git-main-aoighosts-projects.vercel.app/Webpages/" + htmlFilename;
             
             
         } catch (IOException ex) {
             Logger.getLogger(ClientHandler.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return URL; //URL that will lead to book
-        
+         
+        return HtmlURl;
     }
 
     public static void writeHTMLFile(Document doc, String outputPath) {
@@ -261,6 +265,12 @@ public class ClientHandler implements Runnable{
         Expirydate+= "Z";
         
         return Expirydate;
+    }
+    
+    public synchronized static void ChangeGitrepo(Document doc, String Filename){
+        Pull();
+        writeHTMLFile(doc, "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Webpages\\" + Filename + ".html");
+        Commit();
     }
 }
     
