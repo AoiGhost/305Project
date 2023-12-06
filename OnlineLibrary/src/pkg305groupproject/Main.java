@@ -16,7 +16,7 @@ public class Main {
         ClientHandler.ExpiryDateCreater(5);
         
         
-        /*
+        
           try {
             System.out.println("Enter ID: ");
             Scanner user_input = new Scanner(System.in);
@@ -87,7 +87,7 @@ public class Main {
 
             System.out.println("you entered in the wrong format");
         }
-        */
+        
     }
         
     

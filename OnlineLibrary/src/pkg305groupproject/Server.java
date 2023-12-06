@@ -9,7 +9,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
      
         try  {
-             System.out.println("Server on, Waiting for clients....");
+            System.out.println("Server on, Waiting for clients....");
             int Client_Number=1;
             ServerSocket server_socket = new ServerSocket(9324);
             while (true) {                
