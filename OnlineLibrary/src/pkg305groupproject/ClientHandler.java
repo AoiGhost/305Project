@@ -54,20 +54,22 @@ public class ClientHandler implements Runnable{
     public void run() {
         
         // Specify the absolute path to your books directory here
-        String booksDirectory = "C:\\Users\\starx\\Desktop\\CPIT305\\copresseed books\\";
+        String booksDirectory = "C:\\Users\\96657\\Documents\\GitHub\\305Project\\OnlineLibrary\\Books\\";
 
   
             try (
                  BufferedReader in = new BufferedReader(new InputStreamReader(Client.getInputStream()));
                  OutputStream out = Client.getOutputStream()) {
+                 int UserChoice = in.read();
                 
-                // Read the book name from the client
-                String bookName = in.readLine();
-               // Print the requested book name to the console
-                System.out.println("Client requested: " + bookName);
+                 if (UserChoice == 1){
+                     //the user wants to buy a book
+                     int BookNumber = in.read();
+                     // Read the book name from the client
+                      System.out.println("Client requested: " + BookNumber);
 
                 // Use the absolute path to locate the PDF file
-                File pdfFile = new File(booksDirectory + bookName + ".pdf");
+                File pdfFile = new File(booksDirectory + BookNumber + ".pdf");
                 if (pdfFile.exists()) {
                     // Create a buffer for reading and writing data
                     byte[] buffer = new byte[2097152]; //2MB buffer
@@ -79,9 +81,15 @@ public class ClientHandler implements Runnable{
                             out.write(buffer, 0, count);
                         }
                     }
-                } else {
-                    out.write("Book not found".getBytes());
+                } 
+                else {
+                    out.write("Book not found".getBytes());         
+                    // Print the requested book name to the console
+               
                 }
+                 }//first if user choice. 
+                 
+
             } catch (IOException e) {
                 System.err.println("Error: " + e.getMessage());
                 

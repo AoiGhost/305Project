@@ -14,6 +14,8 @@ import java.text.SimpleDateFormat;
 import java.text.ParseException;
 import java.util.Date;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author zezox
@@ -23,13 +25,20 @@ public class DatabaseConnection {
     private String username = "yaz";
     private String password = "123";
     private static final String DB_URL = "jdbc:derby://localhost:1527/OnlineLibraryV2";
-
+    private Connection conn;
     public DatabaseConnection() {
-        initialize();
+        
+        try {
+            initialize();
+        } catch (SQLException ex) {
+            Logger.getLogger(DatabaseConnection.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
-    private void initialize() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, username, password); Statement stmt = conn.createStatement()) {
+    private void initialize() throws SQLException {
+        conn = DriverManager.getConnection(DB_URL, username, password);
+            Statement stmt = conn.createStatement();
+            
             String sql = "";
 //String dro = "DROP TABLE " + "book";
 //stmt.execute(dro);
@@ -67,34 +76,7 @@ public class DatabaseConnection {
 //                    + "username varchar(225) PRIMARY KEY,"
 //                    + "password varchar(225) NOT NULL)";
 //            stmt.execute(sql);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
         }
-    }
-
-    public void addAuthor() {
-        int id;
-        String name;
-        String bio;
-        Scanner writer = new Scanner(System.in);
-        String sql = "INSERT INTO author(author_id,name, bio) VALUES(?,?,?)";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL, username, password); PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            System.out.println("Enter you id; ");
-            id = writer.nextInt();
-            pstmt.setInt(1, id);
-            System.out.println("Enter your name: ");
-            name = writer.next();
-            pstmt.setString(2, name);
-            System.out.println("Enter your bio: ");
-            bio = writer.next();
-            pstmt.setString(3, bio);
-
-            pstmt.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
 
     public void addBook() throws ParseException {
         int bookId;
@@ -156,7 +138,7 @@ public class DatabaseConnection {
         }
     }
 
-    public void getAllBooks() {
+    public  void getAllBooks() {
         String sql = "SELECT * FROM author";
 
         try (Connection conn = DriverManager.getConnection(DB_URL, username, password); Statement stmt = conn.createStatement(); ResultSet rs = stmt.executeQuery(sql)) {
@@ -172,7 +154,7 @@ public class DatabaseConnection {
         }
     }
 
-    public boolean login(String usernam, String passwor) {
+    public  boolean login(String usernam, String passwor) {
         String sql = "SELECT password FROM users WHERE username = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL, username, password); PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, usernam);
@@ -198,6 +180,30 @@ public class DatabaseConnection {
             System.out.println("User registered successfully.");
         } catch (SQLException e) {
             System.out.println("Error adding user: " + e.getMessage());
+        }
+    }
+    public void addAuthor() {
+        int id;
+        String name;
+        String bio;
+        Scanner writer = new Scanner(System.in);
+        String sql = "INSERT INTO author(author_id,name, bio) VALUES(?,?,?)";
+
+        try (Connection conn = DriverManager.getConnection(DB_URL, username, password);
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            System.out.println("Enter you id; ");
+            id = writer.nextInt();
+            pstmt.setInt(1, id);
+            System.out.println("Enter your name: ");
+            name = writer.next();
+            pstmt.setString(2, name);
+            System.out.println("Enter your bio: ");
+            bio = writer.next();
+            pstmt.setString(3, bio);
+
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
         }
     }
 
