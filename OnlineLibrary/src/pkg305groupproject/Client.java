@@ -1,9 +1,12 @@
 package pkg305groupproject;
 
 import java.io.BufferedInputStream;
+import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import static java.lang.System.in;
 import java.net.Socket;
@@ -13,99 +16,102 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Client {
-    public static DatabaseConnection DBcon =  new DatabaseConnection();
+    //public static DatabaseConnection DBcon =  new DatabaseConnection();
 
-    public static void main(String[] args) throws FileNotFoundException, IOException {
-        
-        String serverAddress = "localhost";
-        int port = 9324;
-        Socket socket;
+    public static void main(String[] args) throws FileNotFoundException, IOException, InterruptedException {
+            String serverAddress = "127.0.0.1";
+            int port = 9324;
+             Socket ServerSocket  = new Socket(serverAddress, port);
+            //socket that will lead us to server
+            PrintWriter out = new PrintWriter(ServerSocket.getOutputStream(), true);
+            BufferedInputStream in = new BufferedInputStream(ServerSocket.getInputStream()); // Create a FileOutputStream to save the downloaded book to the spceific path written below
+            InputStreamReader in2 = new InputStreamReader(ServerSocket.getInputStream());
+            BufferedReader in3 = new BufferedReader(in2);
         //this will be used to communicate with server
-        PrintWriter out = null;
-        try {
-            socket = new Socket(serverAddress, port);
-            out = new PrintWriter(socket.getOutputStream(), true);
-            BufferedInputStream in = new BufferedInputStream(socket.getInputStream()); // Create a FileOutputStream to save the downloaded book to the spceific path written below
-        } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-        }
-       
         
+       
+        //here client is connected to server
         
         Scanner user_input = new Scanner(System.in);
        
         boolean x = true;
         while(true){
         try {
-            System.out.println("For login press 1:");
-            System.out.println("For signup press 2:");
-            System.out.println("For exist press 2:");
+            System.out.println("1 for show books");
+            System.out.println("2 for buying ");
+            System.out.println("3 For renting ");
+            System.out.println("4 for exit");
             System.out.print("your choice:");
-            int choice = user_input.nextInt();
+            String choice = user_input.nextLine();
             //customer choice
-            if (choice == 1) {
-
-                System.out.println("Enter username: ");
-                String username = user_input.next();
-                System.out.println("Enter Passowrd:");
-                String password = user_input.next();
+            if (choice.equals("1")) {
+            //show books
+            //the user wants to know books , we need to send book pdf
+            System.out.println("the list of books that are available below: " + "\n");
+            out.println(choice);
+            String line;
+            
+            Thread.currentThread().sleep(1000);
+            while ((line = in3.readLine())!= null &&!line.equals("EOF")) {
+                System.out.println(line);
                 
-                if (DBcon.login(username, password)) {
-                    //if we enter here it means the client has loggid in 
-                     
-                        System.out.println("enter 1 for buy , 2 for rent");
-                        
-                        int userchoice = user_input.nextInt();
-                        if (userchoice == 1) {
-                            //the user wants to buy , we need to send book pdf
-                            System.out.println("the list of books that are available to buy below: " + "\n");
-                            Client.DBcon.getAllBooks();
-                            
-                            
-                            System.out.println("Enter the book number you want to buy: ");
-                            int book_number = user_input.nextInt();
-                            //book number that the custmoer want 
-//                          Book book = findBook(books, book_number);
-                            
-                           
-                            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\96657\\Desktop\\" + book_number + ".pdf");
-                                    
-                            //try with resources
-                            //Fileoutput path in the client
-                            
-                                //Send the book name to the server
-                                out.println(book_number);
-
-                                // Create a buffer for reading data
-                                byte[] buffer = new byte[2097152];
-                                int count;
-
-                                // Read data from the server and write it to the file
-                                while ((count = in.read(buffer)) > 0) {
-                                    fileOut.write(buffer, 0, count);
-
-                                }
-
-                                System.out.println("Thanks for buying the book and the book downloaded successfully.");
-                        }//buy choice
-
-                }//login
-            }//choice 
-            
-            
-            if (choice == 2) {
-                System.out.println("Enter username: ");
-                String username = user_input.next();
-                System.out.println("Enter Passowrd:");
-                String password = user_input.next();
-                DBcon.signUp(username, password);
             }
-            else{
-                x = false;
+            //if we reach here this means the list of books have been written
+           
+            }  
+            
+            else if (choice.equals("2") ) {
+               //buying
+                System.out.println("Enter the book number you want to buy: ");
+                String book_number = user_input.nextLine();
+                //book number that the custmoer want 
+                 out.println(book_number);    
+                 FileOutputStream fileOut = new FileOutputStream("C:\\Users\\96657\\Desktop\\" + book_number + ".pdf");
+                 byte[] buffer = new byte[2097152];
+                 int count;
+
+                // Read data from the server and write it to the file
+                while ((count = in.read(buffer)) > 0) {
+                    fileOut.write(buffer, 0, count);
+                   
+                    }
+                System.out.println("Thanks for buying the book and the book downloaded successfully.");
+                fileOut.close();
+                }
+            else if (choice.equals("")) {
+                   //renting
+               
+               
+            } else if (choice.equals("")) {
+               //exit
+               x = false;
+               
             } 
+            
+            
+            
+           
+//                          Book book = findBook(books, book_number);
+
 
             
-        } catch (InputMismatchException e) {
+
+            //try with resources
+            //Fileoutput path in the client
+
+            //Send the book name to the server
+          
+
+            // Create a buffer for reading data
+            
+            //Buying 
+            
+            
+           
+            
+
+            
+         } catch (InputMismatchException e) {
 
             System.out.println("you entered in the wrong format");
         }
@@ -127,17 +133,17 @@ public class Client {
         return null;
     }
 
-    public Client() {
-         DBcon = new DatabaseConnection();
-    }
-
-    public static DatabaseConnection getDBcon() {
-        return DBcon;
-    }
-
-    public static void setDBcon(DatabaseConnection DBcon) {
-        Client.DBcon = DBcon;
-    }
+//    public Client() {
+//         DBcon = new DatabaseConnection();
+//    }
+//
+//    public static DatabaseConnection getDBcon() {
+//        return DBcon;
+//    }
+//
+//    public static void setDBcon(DatabaseConnection DBcon) {
+//        Client.DBcon = DBcon;
+//    }
 
 
 

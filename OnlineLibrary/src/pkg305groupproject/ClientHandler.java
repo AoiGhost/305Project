@@ -20,6 +20,8 @@ import java.util.logging.Logger;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -55,15 +57,49 @@ public class ClientHandler implements Runnable{
         
         // Specify the absolute path to your books directory here
         String booksDirectory = "C:\\Users\\96657\\Documents\\GitHub\\305Project\\OnlineLibrary\\Books\\";
-
-  
             try (
-                 BufferedReader in = new BufferedReader(new InputStreamReader(Client.getInputStream()));
-                 OutputStream out = Client.getOutputStream()) {
-                 int UserChoice = in.read();
-                
-                 if (UserChoice == 1){
-                     //the user wants to buy a book
+                 InputStreamReader in = new InputStreamReader(Client.getInputStream());
+                 BufferedReader in2 = new BufferedReader(in);
+                 OutputStream output = Client.getOutputStream();
+                 OutputStreamWriter writer = new OutputStreamWriter(Client.getOutputStream(), StandardCharsets.UTF_8);   
+                    ) 
+            {
+                 //Here code will start and communication will start also 
+                String UserChoice;
+             
+                while (!(UserChoice = in2.readLine()).equals("")){
+                       System.out.println(UserChoice);
+                      if (UserChoice.equals("1")){
+                        //user want to know books
+                        String filePath = "C:\\Users\\96657\\Documents\\GitHub\\305Project\\OnlineLibrary\\Books\\BookList.txt"; // Path to the input file
+                         try (BufferedReader BookListreader = new BufferedReader(new FileReader(filePath))) {
+                        String line;
+                        // Print the column headers
+                        writer.write(BookListreader.readLine());
+                       
+
+                        // Print book information
+                        while ((line = BookListreader.readLine()) != null) {
+                           
+                            String[] values = line.split(",");
+                            String bookNumber = values[0].trim();
+                            String bookName = values[1].trim();
+                            writer.write("Book Number: " + bookNumber);
+                            writer.write("Book Name: " + bookName);
+                            writer.write("");
+                            writer.write("\n");
+                            writer.flush();
+                        }
+                       writer.write("EOF");
+                       writer.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                 
+                  
+                 }
+                 else if (UserChoice.equals("2")){
+                     //user wants to buy
                      int BookNumber = in.read();
                      // Read the book name from the client
                       System.out.println("Client requested: " + BookNumber);
@@ -71,6 +107,7 @@ public class ClientHandler implements Runnable{
                 // Use the absolute path to locate the PDF file
                 File pdfFile = new File(booksDirectory + BookNumber + ".pdf");
                 if (pdfFile.exists()) {
+                    System.out.println("sdfsdfsdf");
                     // Create a buffer for reading and writing data
                     byte[] buffer = new byte[2097152]; //2MB buffer
                     // Open a FileInputStream for the file
@@ -78,16 +115,26 @@ public class ClientHandler implements Runnable{
                         int count;
                         // Read data from the file and write it to the client
                         while ((count = fis.read(buffer)) > 0) {
-                            out.write(buffer, 0, count);
+                           // out.write(buffer, 0, count);
                         }
                     }
                 } 
                 else {
-                    out.write("Book not found".getBytes());         
+                    //out.write("Book not found".getBytes());         
                     // Print the requested book name to the console
                
                 }
-                 }//first if user choice. 
+                     
+                 } 
+                 else if (UserChoice.equals("3")){
+                     //user wants to rent a book
+                     
+                     
+                 }
+                }
+               
+                 
+
                  
 
             } catch (IOException e) {

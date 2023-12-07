@@ -7,24 +7,21 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        
+        int ClientNumber = 0;
         try  {
-            DatabaseConnection DB = new DatabaseConnection();
-            System.out.println("Server on, Waiting for clients....");
-            int Client_Number=1;
             ServerSocket server_socket = new ServerSocket(9324);
-            while (true) {                
+            PrintWriter logs = new PrintWriter(new FileOutputStream("C:\\Users\\96657\\Documents\\GitHub\\Logs.txt",true), true);
+            while (true) {            
+                System.out.println("waiting ");
                 Socket incoming = server_socket.accept();
-                System.out.println("Clinet Number: "+ Client_Number);
+                // new Client
+                
                 Runnable r = new ClientHandler(incoming);
                 Thread th = new Thread(r);
                 th.start();
-                th.join();
                 
-                Client_Number++;
-             
             }
-        } catch(IOException | InterruptedException e){
+        } catch(IOException e){
         
         }
         
