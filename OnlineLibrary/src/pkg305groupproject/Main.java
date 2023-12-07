@@ -1,4 +1,3 @@
-
 package pkg305groupproject;
 
 import java.io.BufferedInputStream;
@@ -13,88 +12,99 @@ public class Main {
 
     public static void main(String[] args) {
         Book books = new Book();
+        DatabaseConnection DB = new DatabaseConnection();
 //        System.out.println(ClientHandler.RentedBook(1, 3));
-////
-ClientHandler.Commit();
-        
-        
-        
-          try {
-              
-              DatabaseConnection db = new DatabaseConnection();
-            System.out.println("Enter ID: ");
-            Scanner user_input = new Scanner(System.in);
-            int ID = user_input.nextInt();
-            System.out.println("Enter Passowrd:");
-            String password = user_input.next();
-            if (Authentication(ID, password)) {
-                try {
-                    
-                } catch (Exception e) {
-                }
-                System.out.println("What would you like to choose?, Buy an e-book(1), Rent e-book(2)");
-                System.out.println("choose the number that's the next to the thing you want");
-                
-                try {
-                    int number = user_input.nextInt();
-                if (number == 1) {
-                    System.out.println("the list of books that are available to buy below: " + "\n");
-                    books.viewBooksInfo();
+        Scanner user_input = new Scanner(System.in);
+        ClientHandler.Commit();
+boolean x = true;
+while(x){
+        try {
+            System.out.println("For login press 1:");
+            System.out.println("For signup press 2:");
+            System.out.println("For exist press 2:");
+            System.out.print("your choice:");
+            int choice = user_input.nextInt();
 
-                    System.out.println("Enter the book number you want to buy: ");
-                    int book_number = user_input.nextInt();
-                   
-                    Book book = findBook(books, book_number);
-                    String book_name = book.getName();
+            if (choice == 1) {
 
-                    String serverAddress = "localhost";
-                    int port = 9324;
+                System.out.println("Enter username: ");
+                String username = user_input.next();
+                System.out.println("Enter Passowrd:");
+                String password = user_input.next();
+                if (DB.login(username, password)) {
+                    try {
 
-                    try (
-                             Socket socket = new Socket(serverAddress, port);  
-                            PrintWriter out = new PrintWriter(socket.getOutputStream(), true);  
-                            BufferedInputStream in = new BufferedInputStream(socket.getInputStream());
-                            // Create a FileOutputStream to save the downloaded book to the spceific path written below
-                              FileOutputStream fileOut = new FileOutputStream("C:\\Users\\starx\\Desktop\\CPIT305\\Downloaded books\\" + book_name + ".pdf")) {
+                    } catch (Exception e) {
+                    }
+                    System.out.println("What would you like to choose?, Buy an e-book(1), Rent e-book(2)");
+                    System.out.println("choose the number that's the next to the thing you want");
 
-                        String bookName = book_name;
+                    try {
+                        int number = user_input.nextInt();
+                        if (number == 1) {
+                            System.out.println("the list of books that are available to buy below: " + "\n");
+                            books.viewBooksInfo();
 
-                        //Send the book name to the server
-                        out.println(bookName);
+                            System.out.println("Enter the book number you want to buy: ");
+                            int book_number = user_input.nextInt();
 
-                        // Create a buffer for reading data
-                        byte[] buffer = new byte[2097152];
-                        int count;
+                            Book book = findBook(books, book_number);
+                            String book_name = book.getName();
 
-                        // Read data from the server and write it to the file
-                        while ((count = in.read(buffer)) > 0) {
-                            fileOut.write(buffer, 0, count);
-                            
+                            String serverAddress = "localhost";
+                            int port = 9324;
+
+                            try (
+                                    Socket socket = new Socket(serverAddress, port); PrintWriter out = new PrintWriter(socket.getOutputStream(), true); BufferedInputStream in = new BufferedInputStream(socket.getInputStream()); // Create a FileOutputStream to save the downloaded book to the spceific path written below
+                                     FileOutputStream fileOut = new FileOutputStream("C:\\Users\\starx\\Desktop\\CPIT305\\Downloaded books\\" + book_name + ".pdf")) {
+
+                                String bookName = book_name;
+
+                                //Send the book name to the server
+                                out.println(bookName);
+
+                                // Create a buffer for reading data
+                                byte[] buffer = new byte[2097152];
+                                int count;
+
+                                // Read data from the server and write it to the file
+                                while ((count = in.read(buffer)) > 0) {
+                                    fileOut.write(buffer, 0, count);
+
+                                }
+
+                                System.out.println("Thanks for buying the book and the book downloaded successfully.");
+                            } catch (IOException e) {
+                                System.err.println("Error: " + e.getMessage());
+                            }
 
                         }
 
-                        System.out.println("Thanks for buying the book and the book downloaded successfully.");
-                    } catch (IOException e) {
-                        System.err.println("Error: " + e.getMessage());
+                    } catch (InputMismatchException e) {
+                        System.out.println("you entered in the wrong format");
                     }
 
                 }
-
-                    
-                } catch (InputMismatchException e) {
-                    System.out.println("you entered in the wrong format");
-                }
-                
+            }
+            if (choice == 2) {
+                System.out.println("Enter username: ");
+                String username = user_input.next();
+                System.out.println("Enter Passowrd:");
+                String password = user_input.next();
+                DB.signUp(username, password);
+            }
+            else{
+                x = false;
             }
 
         } catch (InputMismatchException e) {
 
             System.out.println("you entered in the wrong format");
         }
-        
+
     }
-        
-    
+    }
+
     private static boolean Authentication(int ID, String password) {
         return true;
     }
@@ -109,5 +119,13 @@ ClientHandler.Commit();
         return null;
     }
 
-}
+    private static void log() {
+        Scanner user_input = new Scanner(System.in);
+        System.out.println("Enter username: ");
+        String username = user_input.next();
+        System.out.println("Enter Passowrd:");
+        String password = user_input.next();
 
+    }
+
+}
