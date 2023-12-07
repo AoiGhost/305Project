@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-        System.out.println(ClientHandler.RentedBook(4, 3));
+        System.out.println(ClientHandler.RentedBook(1, 3));
       
         
     }

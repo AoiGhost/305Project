@@ -124,7 +124,7 @@ public class ClientHandler implements Runnable{
         myProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         myProcessBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
-            myProcessBuilder.directory(new File("C:\\Users\\96675\\Documents\\GitHub\\305Project"));
+            myProcessBuilder.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
             Process process = myProcessBuilder.start();
              // Capture the output and error streams
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
@@ -220,7 +220,7 @@ public class ClientHandler implements Runnable{
             //after we exit from the if statment , that means we have finished manipulation the doc object
             //now we just need to write it into a new html file
             //the file name should change depending on values from the database 
-            String htmlFilename = "1" + BookNumber;
+            String htmlFilename = "1_" + BookNumber;
             
             
             ChangeGitrepo(doc, htmlFilename);
