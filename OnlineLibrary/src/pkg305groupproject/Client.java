@@ -8,16 +8,16 @@ import java.net.Socket;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class Main {
+public class Client {
 
     public static void main(String[] args) {
-        Book books = new Book();
-        DatabaseConnection DB = new DatabaseConnection();
-//        System.out.println(ClientHandler.RentedBook(1, 3));
+        
+
         Scanner user_input = new Scanner(System.in);
-        ClientHandler.Commit();
-boolean x = true;
-while(x){
+        
+            
+        boolean x = true;
+        while(x){
         try {
             System.out.println("For login press 1:");
             System.out.println("For signup press 2:");

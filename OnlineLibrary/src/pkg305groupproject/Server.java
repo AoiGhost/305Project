@@ -7,7 +7,7 @@ import java.net.Socket;
 
 public class Server {
     public static void main(String[] args) throws IOException {
-     
+        DatabaseConnection DB = new DatabaseConnection();
         try  {
             System.out.println("Server on, Waiting for clients....");
             int Client_Number=1;

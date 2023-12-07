@@ -22,7 +22,7 @@ public class DatabaseConnection {
 
     private String username = "yaz";
     private String password = "123";
-    private static final String DB_URL = "jdbc:derby://localhost:1527/library";
+    private static final String DB_URL = "jdbc:derby://localhost:1527/OnlineLibraryV2";
 
     public DatabaseConnection() {
         initialize();
@@ -33,21 +33,19 @@ public class DatabaseConnection {
             String sql = "";
 //String dro = "DROP TABLE " + "book";
 //stmt.execute(dro);
-//             sql = "CREATE TABLE author ("
-//                    + "author_id INTEGER PRIMARY KEY,"
-//                    + "name VARCHAR(255) NOT NULL,"
-//                    + "bio VARCHAR(255) NOT NULL )";
-//            stmt.execute(sql);
+             sql = "CREATE TABLE author ("
+                    + "author_id INTEGER PRIMARY KEY,"
+                    + "name VARCHAR(255) NOT NULL,"
+                    + "bio VARCHAR(255) NOT NULL )";
+            stmt.execute(sql);
 
-//            sql = "CREATE TABLE book ("
+//            sql = "CREATE TABLE books ("
 //                    + "book_id INTEGER PRIMARY KEY,"
 //                    + "title VARCHAR(255) NOT NULL,"
 //                    + "author_name VARCHAR(255) NOT NULL,"
 //                    + "author_id INTEGER,"
 //                    + "FOREIGN KEY (author_id) REFERENCES author(author_id),"
-//                    + "isbn VARCHAR(255) NOT NULL,"
-//                    + "publication_year DATE NOT NULL,"
-//                    + "years DATE NOT NULL )";
+//                    + "isbn VARCHAR(255) NOT NULL )";
 //            stmt.execute(sql);
 //            sql = "CREATE TABLE Member ("
 //                    + "member_id INTEGER PRIMARY KEY,"
@@ -55,14 +53,14 @@ public class DatabaseConnection {
 //                    + "email VARCHAR(255) NOT NULL"
 //                    + ")";
 //            stmt.execute(sql);
-//            sql = "CREATE TABLE loan ("
+//            sql = "CREATE TABLE Rent ("
 //                    + "loan_id INTEGER PRIMARY KEY,"
-//                    + "member_id INTEGER NOT NULL,"
-//                    + "FOREIGN KEY (member_id) REFERENCES Member(member_id),"
+//                    + "username VARCHAR(255) NOT NULL,"
+//                    + "FOREIGN KEY (username) REFERENCES users(username),"
 //                    + "book_id INTEGER NOT NULL,"
 //                    + "FOREIGN KEY (book_id) REFERENCES book(book_id),"
 //                    + "loan_Date DATE NOT NULL,"
-//                    + "return_Date DATE NOT NULL"
+//                    + "Expiry_Date DATE NOT NULL"
 //                    + ")";
 //            stmt.execute(sql);
 //            sql = "CREATE TABLE users ("
