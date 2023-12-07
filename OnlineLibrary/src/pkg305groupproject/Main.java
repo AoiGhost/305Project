@@ -14,6 +14,8 @@ public class Main {
     public static void main(String[] args) {
         Book books = new Book();
 //        System.out.println(ClientHandler.RentedBook(1, 3));
+////
+ClientHandler.Commit();
         
         
         

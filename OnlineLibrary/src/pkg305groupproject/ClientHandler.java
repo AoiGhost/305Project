@@ -107,7 +107,7 @@ public class ClientHandler implements Runnable{
         //here I will make a process that executes the script 
         
         //here put the path to the script
-        ProcessBuilder myProcessBuilder = new ProcessBuilder("cmd.exe", "/c", "C:\\Users\\96657\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
+        ProcessBuilder myProcessBuilder = new ProcessBuilder("cmd.exe", "/c", "C:\\Users\\zezox\\Documents\\GitHub\\305Project\\Git_Commit_push.bat");
         Map<String, String> environment = myProcessBuilder.environment();
         String path = environment.get("PATH");
         String gitPath = "C:\\Program Files\\Git\\bin";
@@ -116,7 +116,7 @@ public class ClientHandler implements Runnable{
         myProcessBuilder.redirectOutput(ProcessBuilder.Redirect.INHERIT);
         myProcessBuilder.redirectError(ProcessBuilder.Redirect.INHERIT);
         try {
-            myProcessBuilder.directory(new File("C:\\Users\\96657\\Documents\\GitHub\\305Project"));
+            myProcessBuilder.directory(new File("C:\\Users\\zezox\\Documents\\GitHub\\305Project"));
             Process process = myProcessBuilder.start();
              // Capture the output and error streams
             BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
