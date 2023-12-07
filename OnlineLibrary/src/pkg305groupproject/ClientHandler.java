@@ -220,7 +220,7 @@ public class ClientHandler implements Runnable{
             //after we exit from the if statment , that means we have finished manipulation the doc object
             //now we just need to write it into a new html file
             //the file name should change depending on values from the database 
-            String htmlFilename = "UserID" + "BookNumber";
+            String htmlFilename = "1" + BookNumber;
             
             
             ChangeGitrepo(doc, htmlFilename);
